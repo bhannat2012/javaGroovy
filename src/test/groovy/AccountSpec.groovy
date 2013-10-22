@@ -1,10 +1,15 @@
 import com.Account
+import com.Service
+import com.service.AccountService
+import groovy.sql.Sql
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.context.ApplicationContext
 import org.springframework.jdbc.BadSqlGrammarException
 import org.springframework.jdbc.core.JdbcTemplate
 import org.springframework.test.context.ContextConfiguration
+import spock.lang.Shared
 import spock.lang.Specification
+import spock.lang.Unroll
 
 /**
  * User: Akhil Shastri
@@ -13,6 +18,8 @@ import spock.lang.Specification
  */
 @ContextConfiguration("classpath:applicationContext.xml")
 class AccountSpec extends Specification {
+
+    Service srvc = Mock();
 
     @Autowired(required = true)
     Account account
@@ -61,5 +68,36 @@ class AccountSpec extends Specification {
         def intOut = jdbcTemplate.queryForObject(sql,Integer.class);
         then:  "should throe sql exception"
         thrown(BadSqlGrammarException)
+    }
+
+    @Shared sql = Sql.newInstance("jdbc:h2:mem:", "org.h2.Driver")
+
+    @Unroll
+    def "unroll test form Max of #a and #b is #c"(){
+         expect:
+          Math.max(a,b) == c
+         where:
+             a|b||c
+             1|2||2
+             3|1||3
+             1|4||4
+
+    }
+
+//    def "db test with sql"(){
+//        when:
+//           def x= sql.firstRow("select count(1) from accounts")
+//        //println x
+//        then:
+//          x ==[1:1]
+//    }
+
+    def mockMethods(){
+        setup:
+         srvc.save() >> "Ok"
+        when:
+         def retval = srvc.save();
+        then:
+          retval =="Ok"
     }
 }

@@ -78,6 +78,7 @@
     <orderEntry type="library" exported="" name="spring-context-3.2.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="spring-aop-3.2.2.RELEASE" level="project" />
     <orderEntry type="library" exported="" name="spring-jdbc-3.2.2.RELEASE" level="project" />
+    <orderEntry type="library" exported="" name="javax.inject-1" level="project" />
   </component>
 </module>
 

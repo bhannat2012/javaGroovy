@@ -12,4 +12,6 @@ import org.springframework.stereotype.Component
 class AccountService {
 
     EmbeddedDatabase dataSource
+
+    public save(){}
 }
